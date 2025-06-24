@@ -1,0 +1,192 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #EFE4D2;
+  color: #4B352A;
+  padding: 0 20px;
+}
+
+header {
+  background-color: #4B352A; /* warna navbar gelap */
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #EFE4D2;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #EFE4D2;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive fix untuk navbar agar tetap horizontal di HP */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+  }
+}
+
+section {
+  padding: 60px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+p, li {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.huruf-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.huruf {
+  width: 100px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.huruf .aksara {
+  font-family: 'Noto Sans Batak', sans-serif;
+  font-size: 2rem;
+  display: block;
+}
+
+.audio-button {
+  background-color: transparent;
+  border: none;
+  color: #4B352A;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.material-icons {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+form input,
+form textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background-color: #4B352A;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #3b281f;
+}
+
+#list-ulasan .ulasan-item {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#kontak a {
+  color: #4B352A;
+  text-decoration: underline;
+}
+
+/* Responsive huruf-container */
+@media (max-width: 768px) {
+  .huruf-container {
+    justify-content: center;
+  }
+}
+
+
+.banner {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.banner img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
