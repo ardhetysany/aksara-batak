@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 * {
   margin: 0;
   padding: 0;
@@ -8,24 +12,28 @@
 body {
   background-color: #EFE4D2;
   color: #4B352A;
-  padding: 0 20px;
+  margin: 0;
+  padding: 0;
 }
 
 header {
-  background-color: #4B352A; /* warna navbar gelap */
-  padding: 15px 0;
+  background-color: #4B352A;
+  color: #EFE4D2;
+  width: 100%;
+  padding: 10px 0;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  margin-bottom: 50px;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.navbar-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -49,30 +57,19 @@ nav a {
 }
 
 nav a:hover {
-  text-decoration: underline;
+  color: #ccc;
 }
 
-/* Responsive fix untuk navbar agar tetap horizontal di HP */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav ul {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
-  }
-
-  nav a {
-    font-size: 0.95rem;
-  }
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 200px;
 }
 
 section {
-  padding: 60px 0;
+  padding: 60px 20px;
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -92,6 +89,7 @@ p, li {
   flex-wrap: wrap;
   gap: 20px;
   margin-top: 20px;
+  justify-content: center;
 }
 
 .huruf {
@@ -154,6 +152,7 @@ form button:hover {
   background-color: #3b281f;
 }
 
+/* ULASAN */
 #list-ulasan .ulasan-item {
   background: white;
   padding: 10px;
@@ -167,26 +166,24 @@ form button:hover {
   text-decoration: underline;
 }
 
-/* Responsive huruf-container */
 @media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+  }
+
   .huruf-container {
     justify-content: center;
   }
-}
-
-
-.banner {
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 40px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.banner img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
 }
