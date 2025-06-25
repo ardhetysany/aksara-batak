@@ -5,31 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aksara Batak</title>
 
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-<header class="full-width" style="background-color: #4B352A;">
-  <nav>
-    <div class="navbar-container">
-    <div class="logo">Aksara Batak</div>
-    <ul class="nav-menu">
-      <li><a href="#sejarah">Sejarah</a></li>
-      <li><a href="#aksara">Aksara</a></li>
-      <li><a href="#ulasan">Ulasan</a></li>
-      <li><a href="#kontak">Kontak</a></li>
-    </ul>
-  </nav>
-  </div>
-</header>
+  <header>
+    <nav>
+      <div class="logo">Aksara Batak</div>
+      <ul class="nav-menu">
+        <li><a href="#sejarah">Sejarah</a></li>
+        <li><a href="#aksara">Aksara</a></li>
+        <li><a href="#ulasan">Ulasan</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<div class="banner">
+  <div class="banner">
     <img src="assets/img/pustaha-dengan-aksara-batak.jpg" class="banner-image full-width" alt="Aksara Batak">
-</div>
+  </div>
 
   <main>
     <section id="sejarah">
@@ -65,20 +61,17 @@
         <div class="huruf"><span class="aksara">ᯑ</span><p>Nga</p><button class="audio-button"><span class="material-icons">volume_up</span></button></div>
         <div class="huruf"><span class="aksara">ᯒ</span><p>A</p><button class="audio-button"><span class="material-icons">volume_up</span></button></div>
       </div>
+</section>
 
-      <h2>Anak Ni Surat</h2>
-      <ul>
-        <li><strong>᯲</strong> – menghilangkan vokal (pangolat)</li>
-        <li><strong>᯳</strong> – vokal i</li>
-        <li><strong>᯴</strong> – vokal u</li>
-        <li><strong>᯵</strong> – vokal e</li>
-        <li><strong>᯶</strong> – vokal o</li>
-        <li><strong>᯷</strong> – konsonan ng</li>
-      </ul>
 
-      <h2>Contoh Kata dan Kalimat</h2>
-      <p><strong>Kata:</strong> ᯂ᯳ (ki), ᯅ᯲ (d)</p>
-      <p><strong>Kalimat:</strong> ᯀᯉ ᯅᯉᯖ (Ha na mana)</p>
+    <section id="translator">
+      <h1>Terjemahkan ke Bahasa Batak</h1>
+      <input type="text" id="input-indo" placeholder="Tulis kata bahasa Indonesia..." />
+      <button onclick="terjemahkan()">Terjemahkan</button>
+      <div id="hasil-terjemahan">
+        <p><strong>Bahasa Batak:</strong> <span id="batak-word"></span></p>
+        <p><strong>Aksara Batak:</strong> <span class="aksara" id="aksara-batak"></span></p>
+      </div>
     </section>
 
     <section id="ulasan">
@@ -93,10 +86,12 @@
       <div id="list-ulasan"></div>
     </section>
 
-    <section id="kontak">
-      <h1>Kontak</h1>
-      <p>Instagram: <a href="https://instagram.com/inisaneee" target="_blank">@inisaneee</a></p>
-    </section>
+    <footer>
+  <div class="footer-content">
+    <p>Instagram: <a href="https://instagram.com/inisaneee" target="_blank">@inisaneee</a></p>
+  </div>
+</footer>
+
   </main>
 
   <script>
@@ -117,6 +112,28 @@
       document.getElementById('list-ulasan').prepend(div);
       this.reset();
     });
+
+    const kamus = {
+      'aku': { batak: 'ahu', aksara: 'ᯀᯮ' },
+      'cinta': { batak: 'holong', aksara: 'ᯂᯞᯬ' },
+      'maaf': { batak: 'ampun', aksara: 'ᯀᯔᯮᯉ᯲' },
+      'air': { batak: 'aek', aksara: 'ᯀᯩᯂ᯲' },
+      'tidur': { batak: 'modom', aksara: 'ᯔᯬᯑ᯲' },
+      'makan': { batak: 'mangan', aksara: 'ᯔᯔᯰᯉ᯲' }
+      
+    };
+
+    function terjemahkan() {
+      const input = document.getElementById('input-indo').value.toLowerCase().trim();
+      const result = kamus[input];
+      if (result) {
+        document.getElementById('batak-word').textContent = result.batak;
+        document.getElementById('aksara-batak').textContent = result.aksara;
+      } else {
+        document.getElementById('batak-word').textContent = '(tidak ditemukan)';
+        document.getElementById('aksara-batak').textContent = '';
+      }
+    }
   </script>
 </body>
 </html>
