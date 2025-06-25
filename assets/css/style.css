@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&family=Poppins:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 * {
@@ -12,28 +11,26 @@
 body {
   background-color: #EFE4D2;
   color: #4B352A;
-  margin: 0;
-  padding: 0;
 }
 
 header {
   background-color: #4B352A;
   color: #EFE4D2;
-  width: 100%;
-  padding: 10px 0;
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  margin-bottom: 50px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -46,9 +43,10 @@ nav ul {
   list-style: none;
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
-nav a {
+nav li a {
   text-decoration: none;
   color: #EFE4D2;
   font-weight: 500;
@@ -57,15 +55,15 @@ nav a {
 }
 
 nav a:hover {
-  color: #ccc;
+  color: #ddd;
 }
 
 .banner-image {
   width: 100%;
   height: auto;
-  display: block;
-  object-fit: cover;
   max-height: 200px;
+  object-fit: cover;
+  display: block;
 }
 
 section {
@@ -152,13 +150,28 @@ form button:hover {
   background-color: #3b281f;
 }
 
-/* ULASAN */
-#list-ulasan .ulasan-item {
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+#form-ulasan input,
+#form-ulasan textarea {
+  font-size: 0.9rem;
+}
+
+#list-ulasan {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ulasan-item {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 100%;
+  color: #3b281f;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
 #kontak a {
@@ -167,16 +180,16 @@ form button:hover {
 }
 
 @media (max-width: 768px) {
-  .navbar-container {
+  nav {
     flex-direction: column;
     align-items: flex-start;
   }
 
   nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 10px;
   }
 
   nav a {
@@ -186,4 +199,81 @@ form button:hover {
   .huruf-container {
     justify-content: center;
   }
+}
+
+.kata-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kata-grid div {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.kata-grid .aksara {
+  font-size: 2rem;
+  font-family: 'Noto Sans Batak', sans-serif;
+  display: block;
+  margin: 5px 0;
+}
+
+#translator {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 40px auto;
+  max-width: 500px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#translator input {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#translator button {
+  background-color: #4B352A;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#hasil-terjemahan {
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+#hasil-terjemahan .aksara {
+  font-family: 'Noto Sans Batak', sans-serif;
+  font-size: 2rem;
+}
+
+footer {
+  background-color: #3b281f;
+  color: #fff;
+  padding: 20px 40px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+footer a {
+  color: #ffd700;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
