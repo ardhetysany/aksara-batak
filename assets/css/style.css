@@ -86,7 +86,7 @@ section {
 }
 
 h1, h2, h3 {
-  margin-top: 16px; /* Kasih jarak dari elemen sebelumnya */
+  margin-top: 16px; 
   margin-bottom: 12px;
   font-size: 1.2rem;
   font-weight: bold;
@@ -104,7 +104,7 @@ img {
   margin-bottom: 8px;
 }
 
-/* Responsive fix: untuk layar kecil */
+
 @media (max-width: 480px) {
   section {
     padding: 16px 16px;

@@ -9,19 +9,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const formUlasan = document.getElementById('form-ulasan');
-  if (formUlasan) {
-    formUlasan.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const nama = this.nama.value;
-      const ulasan = this.ulasan.value;
-      const div = document.createElement('div');
-      div.className = 'ulasan-item';
-      div.innerHTML = `<strong>${nama}</strong><p>${ulasan}</p>`;
-      document.getElementById('list-ulasan').prepend(div);
-      this.reset();
+
+const formUlasan = document.getElementById('form-ulasan');
+const listUlasan = document.getElementById('list-ulasan');
+
+function tampilkanUlasan(nama, ulasan) {
+  const div = document.createElement('div');
+  div.className = 'ulasan-item';
+  div.innerHTML = `<strong>${nama}</strong><p>${ulasan}</p>`;
+  listUlasan.prepend(div);
+}
+
+
+if (formUlasan) {
+  formUlasan.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const nama = this.nama.value;
+    const ulasan = this.ulasan.value;
+
+    
+    const ulasanRef = firebase.database().ref('ulasan');
+    const newUlasanRef = ulasanRef.push();
+    newUlasanRef.set({
+      nama: nama,
+      ulasan: ulasan,
+      waktu: new Date().toISOString()
+    });
+
+    this.reset();
+  });
+}
+
+firebase.database().ref('ulasan').on('value', function(snapshot) {
+  listUlasan.innerHTML = ''; 
+  const data = snapshot.val();
+  if (data) {
+    const keys = Object.keys(data).reverse(); 
+    keys.forEach(key => {
+      const item = data[key];
+      tampilkanUlasan(item.nama, item.ulasan);
     });
   }
+});
+
 
   let kamus = {};
   fetch("assets/json/kamus.json")
@@ -83,7 +113,6 @@ function toggleText(button) {
   button.textContent = text.classList.contains("expanded") ? "Tutup" : "Selengkapnya";
 }
 
-// Tampilkan slide pertama
 showSlide(currentSlide);
 
 
@@ -156,7 +185,6 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
   });
 });
 
-// Carousel
 const track = document.querySelector('.carousel-track');
 const slides = Array.from(track.children);
 let currentIndex = 0;
@@ -175,15 +203,5 @@ document.getElementById('prev').addEventListener('click', () => {
   updateCarousel();
 });
 
-// Expand / Collapse
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    const textContent = this.previousElementSibling;
-    textContent.classList.toggle('expanded');
-    this.textContent = textContent.classList.contains('expanded')
-      ? 'keyboard_arrow_up'
-      : 'keyboard_arrow_down';
-  });
-});
 
 
