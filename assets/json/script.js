@@ -1,56 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-
-
-    document.querySelectorAll('nav a').forEach(link => {
+  // Smooth scroll
+  document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
       document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
     });
   });
 
+  const formUlasan = document.getElementById('form-ulasan');
+  const listUlasan = document.getElementById('list-ulasan');
 
-const formUlasan = document.getElementById('form-ulasan');
-const listUlasan = document.getElementById('list-ulasan');
+  function tampilkanUlasan(nama, ulasan) {
+    const div = document.createElement('div');
+    div.className = 'ulasan-item';
+    div.innerHTML = `<strong>${nama}</strong><p>${ulasan}</p>`;
+    listUlasan.prepend(div);
+  }
 
-function tampilkanUlasan(nama, ulasan) {
-  const div = document.createElement('div');
-  div.className = 'ulasan-item';
-  div.innerHTML = `<strong>${nama}</strong><p>${ulasan}</p>`;
-  listUlasan.prepend(div);
-}
+  if (formUlasan) {
+    formUlasan.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const nama = this.nama.value.trim();
+      const ulasan = this.ulasan.value.trim();
+      if (!nama || !ulasan) return;
 
+      const ulasanRef = firebase.database().ref('ulasan');
+      const newUlasanRef = ulasanRef.push();
+      newUlasanRef.set({
+        nama,
+        ulasan,
+        waktu: new Date().toISOString()
+      });
 
-if (formUlasan) {
-  formUlasan.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const nama = this.nama.value;
-    const ulasan = this.ulasan.value;
-
-    
-    const ulasanRef = firebase.database().ref('ulasan');
-    const newUlasanRef = ulasanRef.push();
-    newUlasanRef.set({
-      nama: nama,
-      ulasan: ulasan,
-      waktu: new Date().toISOString()
-    });
-
-    this.reset();
-  });
-}
-
-firebase.database().ref('ulasan').on('value', function(snapshot) {
-  listUlasan.innerHTML = ''; 
-  const data = snapshot.val();
-  if (data) {
-    const keys = Object.keys(data).reverse(); 
-    keys.forEach(key => {
-      const item = data[key];
-      tampilkanUlasan(item.nama, item.ulasan);
+      this.reset();
     });
   }
-});
+
+  firebase.database().ref('ulasan').on('value', function(snapshot) {
+    listUlasan.innerHTML = '';
+    const data = snapshot.val();
+    if (data) {
+      const keys = Object.keys(data).reverse();
+      keys.forEach(key => {
+        const item = data[key];
+        tampilkanUlasan(item.nama, item.ulasan);
+      });
+    }
+  });
 
 
   let kamus = {};
@@ -82,56 +78,14 @@ firebase.database().ref('ulasan').on('value', function(snapshot) {
     document.getElementById('aksara-batak').textContent = hasilAksara.join(" ");
   };
 
-let currentSlide = 0;
-const slides = document.querySelectorAll(".carousel-slide");
-
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === index);
-  });
-}
-
-  function nextSlide() {
-    if (currentSlide === slides.length - 1) {
-      goToSlide(0);
-    } else {
-      goToSlide(currentSlide + 1);
-    }
-  }
-
-  function prevSlide() {
-    if (currentSlide === 0) {
-      goToSlide(slides.length - 1);
-    } else {
-      goToSlide(currentSlide - 1);
-    }
-  }
-
-function toggleText(button) {
-  const text = button.previousElementSibling;
-  text.classList.toggle("expanded");
-  button.textContent = text.classList.contains("expanded") ? "Tutup" : "Selengkapnya";
-}
-
-showSlide(currentSlide);
-
-
-  window.playSound = function (id) {
-    const audio = document.getElementById('audio-' + id);
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play();
-    }
-  };
 
   const kartuData = [
-    { aksara: "ᯀᯂᯮ", baca: "ahu", soal: "ahu", jawaban: "ahu" },
-    { aksara: "ᯀ", baca: "a", soal: "a", jawaban: "a" },
-    { aksara: "ᯘ", baca: "sa", soal: "sa", jawaban: "sa" },
-    { aksara: "ᯋᯩ", baca: "wé", soal: "wé", jawaban: "wé" },
-    { aksara: "ᯋ", baca: "wa", soal: "wa", jawaban: "wa" }
+    { aksara: "ᯀᯂᯮ", baca: "ahu" },
+    { aksara: "ᯀ", baca: "a" },
+    { aksara: "ᯘ", baca: "sa" },
+    { aksara: "ᯋᯩ", baca: "wé" },
+    { aksara: "ᯋ", baca: "wa" }
   ];
-
   let current = 0;
 
   function buatFlipcard(data) {
@@ -165,43 +119,34 @@ showSlide(currentSlide);
     loadFlipcard(current);
   };
 
-
-
-  window.nextQuestion = function () {
-    current = (current + 1) % kartuData.length;
-    loadSoal(current);
-    loadFlipcard(current);
-  };
-
   loadFlipcard(current);
-  loadSoal(current);
 
+  // === CAROUSEL ===
+  const track = document.querySelector('.carousel-track');
+  if (track) {
+    const slides = Array.from(track.children);
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    document.getElementById('next').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    });
+  }
+
+  window.playSound = function (id) {
+    const audio = document.getElementById('audio-' + id);
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  };
 });
-
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const parent = btn.closest('.carousel-text');
-    parent.classList.toggle('expanded');
-  });
-});
-
-const track = document.querySelector('.carousel-track');
-const slides = Array.from(track.children);
-let currentIndex = 0;
-
-function updateCarousel() {
-  track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-document.getElementById('next').addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % slides.length;
-  updateCarousel();
-});
-
-document.getElementById('prev').addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-  updateCarousel();
-});
-
-
-
